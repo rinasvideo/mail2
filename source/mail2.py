@@ -69,6 +69,8 @@ while cdf==1:
         print(' アカウントの権限を確認してください')
         print('')
         input(' リトライするにはエンターキーを押してください')
+        if g==true:
+            g=0
         continue
     else:
         cdf=0
