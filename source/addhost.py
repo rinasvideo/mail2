@@ -2,13 +2,31 @@
 import getpass
 import configparser
 import pickle
+import smtplib, ssl
+
 def hostadd():
-    host2=input(' smtpサーバのホスト名 >> ')
-    port=input(' smtpサーバのポート番号 >> ')
-    account = input(' ユーザー名 >> ')
-    from_email=account
-    print('')
-    password = getpass.getpass()
+    cdf=1
+    while cdf==1:
+        host2=input(' smtpサーバのホスト名 >> ')
+        port=input(' smtpサーバのポート番号 >> ')
+        account = input(' ユーザー名 >> ')
+        from_email=account
+        print('')
+        password = getpass.getpass()
+        try:
+            server = smtplib.SMTP_SSL(host2, int(port), context=ssl.create_default_context())
+            server.login(account, password)
+            server.set_debuglevel(debag)
+        except:
+            print('')
+            print(' エラー:認証に失敗しました')
+            print('')
+            print(' アカウントの権限を確認してください')
+            print('')
+            input(' リトライするにはエンターキーを押してください')
+            continue
+        else:
+            cdf=0
     k=input(' セッション情報を記憶しますか？　(Y or N) >> ')
     if k=="Y" or k=="y":
         filename=input(' セッションファイル名 >> ')
