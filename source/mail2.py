@@ -24,7 +24,6 @@ def hostadd():
         filename=input(' セッションファイル名 >> ')
         filename=filename+".bin"
         config = configparser.ConfigParser()
-        config.read('.\\host.ini')
         section2 = 'profile'
         config.add_section(section2)
         config.set(section2, 'file', filename)
