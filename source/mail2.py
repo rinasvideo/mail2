@@ -10,6 +10,8 @@ import copy
 import configparser
 import getpass
 
+args = sys.argv
+os.chdir(os.path.dirname(args[0]))
 def hostadd():
     host2=input(' smtpサーバのホスト名 >> ')
     port=input(' smtpサーバのポート番号 >> ')
@@ -41,7 +43,6 @@ def hostadd():
         f.close()
 
 cds=0
-args = sys.argv
 j=len(args)
 if j==2 and args[1]=='-a':
     hostadd()
