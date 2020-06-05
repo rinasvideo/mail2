@@ -10,9 +10,42 @@ import copy
 import configparser
 import getpass
 
+def hostadd():
+    host2=input(' smtpサーバのホスト名 >> ')
+    port=input(' smtpサーバのポート番号 >> ')
+    account = input(' ユーザー名 >> ')
+    from_email=account
+    print('')
+    password = getpass.getpass()
+    k=input(' セッション情報を記憶しますか？　(Y or N) >> ')
+    if k=="Y" or k=="y":
+        filename=input(' セッションファイル名 >> ')
+        filename=filename+".bin"
+        config = configparser.ConfigParser()
+        config.read('.\\host.ini')
+        section2 = 'profile'
+        config.add_section(section2)
+        config.set(section2, 'file', filename)
+        cc=config.get(section2, 'hostc')
+        cc=cc+1
+        config.set(section2, 'hostc', cc)
+        with open('.\\host.ini', 'w') as file:
+            config.write(file)
+        print(' ')
+        print(' 記憶したセッション情報をクリアするには\n アプリケーションディレクトリ内の「profile.bin」を削除してください')
+        print('')
+        cgn=input(' 次回からユーザー情報の入力を省略します (Enter) >>')
+        usear=[account,password,cgn,host2,port]
+        f=open(filename,'wb')
+        pickle.dump(usear,f)
+        f.close()
+
 cds=0
 args = sys.argv
 j=len(args)
+if j==2 and args[1]=='-a':
+    hostadd()
+    j=0
 if j==2:
     with open(args[1]) as f:
         message = f.read()
@@ -31,6 +64,7 @@ except configparser.NoSectionError:
 os.system('cls')
 if cc>=1:
     file=input(' ロードするセッションファイル名 >> ')
+    file=file+'.bin'
     g=os.path.isfile(file)
 # 表示位置調整
 print('')
