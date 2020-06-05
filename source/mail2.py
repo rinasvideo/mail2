@@ -53,6 +53,7 @@ if j==2:
         cds=1
 
 os.chdir(os.path.dirname(args[0]))
+filecheck=os.path.exists('./host.ini')
 try:
     config = configparser.ConfigParser()
     config.read('./host.ini')
