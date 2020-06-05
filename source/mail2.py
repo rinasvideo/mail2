@@ -54,15 +54,19 @@ if j==2:
 
 os.chdir(os.path.dirname(args[0]))
 filecheck=os.path.exists('./host.ini')
-try:
-    config = configparser.ConfigParser()
-    config.read('./host.ini')
-    section1 = 'profile'
-    file=config.get(section1, 'file') # localhost
-    cc=config.get(section1, 'hostc')
-    g=os.path.isfile(file)
-except configparser.NoSectionError:
-    g=0
+if filecheck!=0:
+    ccvg=1
+    try:
+        config = configparser.ConfigParser()
+        config.read('./host.ini')
+        section1 = 'profile'
+        file=config.get(section1, 'file') # localhost
+        cc=config.get(section1, 'hostc')
+        g=os.path.isfile(file)
+    except configparser.NoSectionError:
+        g=0
+else:
+    ccvg=0
 os.system('cls')
 if cc>=1:
     file=input(' ロードするセッションファイル名 >> ')
@@ -77,7 +81,7 @@ debag=0
 # SMTPサーバへのログイン
 cdf=1
 while cdf==1:
-    if g==True:
+    if g==True and ccvg==1:
         # SMTP認証情報の読み込み
         f=open(file,'rb')
         usear=pickle.load(f)
