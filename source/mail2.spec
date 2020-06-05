@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['mail2.py'],
-             pathex=['D:\\rinasvideo\\開発データ\\個人開発\\mail'],
+             pathex=['D:\\git\\mail2\\source'],
              binaries=[],
              datas=[],
              hiddenimports=[],

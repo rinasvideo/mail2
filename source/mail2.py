@@ -9,9 +9,10 @@ import sys
 import copy
 import configparser
 import getpass
-
+cc=0
+g=0
 args = sys.argv
-os.chdir(os.path.dirname(args[0]))
+#os.chdir(os.path.dirname(args[0]))
 def hostadd():
     host2=input(' smtpサーバのホスト名 >> ')
     port=input(' smtpサーバのポート番号 >> ')
@@ -43,15 +44,10 @@ def hostadd():
 
 cds=0
 j=len(args)
-if j==2 and args[1]=='-a':
-    hostadd()
-    j=0
 if j==2:
     with open(args[1]) as f:
         message = f.read()
         cds=1
-
-os.chdir(os.path.dirname(args[0]))
 filecheck=os.path.exists('./host.ini')
 if filecheck!=0:
     ccvg=1
@@ -67,7 +63,8 @@ if filecheck!=0:
 else:
     ccvg=0
 os.system('cls')
-if cc>=1:
+cc=int(cc)
+if cc>1:
     file=input(' ロードするセッションファイル名 >> ')
     file=file+'.bin'
     g=os.path.isfile(file)
@@ -111,7 +108,7 @@ while cdf==1:
         print(' アカウントの権限を確認してください')
         print('')
         input(' リトライするにはエンターキーを押してください')
-        if g==true:
+        if g==1:
             g=0
         continue
     else:
@@ -125,9 +122,12 @@ while cdf==1:
             section2 = 'profile'
             config.add_section(section2)
             config.set(section2, 'file', filename)
-            cc=config.get(section2, 'hostc')
-            cc=cc+1
-            config.set(section2, 'hostc', cc)
+            try:
+                cc=config.get(section2, 'hostc')
+                cc=cc+1
+            except configparser.NoOptionError:
+                cc=1
+            config.set(section2, 'hostc', str(cc))
             with open('.\\host.ini', 'w') as file:
                 config.write(file)
             print(' ')
@@ -171,7 +171,15 @@ print(backups)
 print('')
 
 # メールの送信
-server.send_message(msg)
-server.quit()
-input(' 送信しました>>')
+try:
+    server.send_message(msg)
+except smtplib.SMTPRecipientsRefused:
+    print(' エラー:送信に失敗しました。\n 送信先のメールアドレスを確認してください')
+    print('')
+    input(' 終了するにはエンターキーを押してください')
+    server.quit()
+    sys.exit()
+else:
+    server.quit()
+    input(' 送信しました>>')
 sys.exit()
