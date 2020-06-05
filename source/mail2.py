@@ -24,11 +24,14 @@ try:
     config.read('./host.ini')
     section1 = 'profile'
     file=config.get(section1, 'file') # localhost
+    cc=config.get(section1, 'hostc')
     g=os.path.isfile(file)
 except configparser.NoSectionError:
     g=0
 os.system('cls')
-
+if cc>=1:
+    file=input(' ロードするセッションファイル名 >> ')
+    g=os.path.isfile(file)
 # 表示位置調整
 print('')
 
@@ -83,6 +86,9 @@ while cdf==1:
             section2 = 'profile'
             config.add_section(section2)
             config.set(section2, 'file', filename)
+            cc=config.get(section2, 'hostc')
+            cc=cc+1
+            config.set(section2, 'hostc', cc)
             with open('.\\host.ini', 'w') as file:
                 config.write(file)
             print(' ')
