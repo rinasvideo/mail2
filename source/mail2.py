@@ -9,6 +9,7 @@ import sys
 import copy
 import configparser
 import getpass
+import hashlib
 cc=0
 g=0
 args = sys.argv
@@ -81,6 +82,16 @@ while cdf==1:
         # SMTP認証情報の読み込み
         f=open(file,'rb')
         usear=pickle.load(f)
+        pas=copy.copy(usear[2])
+        if pas=="y" or pas=="Y":
+            password2 = getpass.getpass(" セッションファイルのパスワード >> ")
+            hs = hashlib.sha256(password2.encode()).hexdigest()
+            pasw=copy.copy(usear[5])
+            if hs!=pasw:
+                print('')
+                print(' セッションファイルのパスワードが一致しません')
+                input(' リトライするにはエンターキーを押してください')
+                continue
         account=copy.copy(usear[0])
         password=copy.copy(usear[1])
         host2=copy.copy(usear[3])
@@ -133,8 +144,15 @@ while cdf==1:
             print(' ')
             print(' 記憶したセッション情報をクリアするには\n アプリケーションディレクトリ内の「profile.bin」を削除してください')
             print('')
-            cgn=input(' 次回からユーザー情報の入力を省略します (Enter) >>')
-            usear=[account,password,cgn,host2,port]
+            input(' 次回からユーザー情報の入力を省略します (Enter) >>')
+            pas=input(' パスワードロックをかけますか? (推奨)  (y or n) >> ')
+            if pas=="y":
+               pas2= getpass.getpass()
+               hs = hashlib.sha256(pas2.encode()).hexdigest()
+            else:
+               hs=""
+               pas="n"
+            usear=[account,password,pas,host2,port,hs]
             f=open(filename,'wb')
             pickle.dump(usear,f)
             f.close()
