@@ -10,6 +10,7 @@ import copy
 import configparser
 import getpass
 import hashlib
+
 cc=0
 g=0
 args = sys.argv
@@ -97,7 +98,15 @@ while cdf==1:
         host2=copy.copy(usear[3])
         port=copy.copy(usear[4])
         from_email=account
-        server = smtplib.SMTP_SSL(host2, int(port), context=ssl.create_default_context())
+        try:
+            server = smtplib.SMTP_SSL(host2, int(port), context=ssl.create_default_context())
+        except:
+            print(' 接続に失敗しました...')
+            print('')
+            print(' エラー：セッションファイル名 '+file)
+            print('')
+            input(' エンターキーを押すとソフトウェアを終了します')
+            sys.exit()
         server.login(account, password)
         server.set_debuglevel(debag)
         break
