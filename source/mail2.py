@@ -67,6 +67,7 @@ else:
 os.system('cls')
 cc=int(cc)
 if cc>1:
+    print('')
     file=input(' ロードするセッションファイル名 >> ')
     file=file+'.bin'
     g=os.path.isfile(file)
@@ -107,9 +108,24 @@ while cdf==1:
             print('')
             input(' エンターキーを押すとソフトウェアを終了します')
             sys.exit()
-        server.login(account, password)
-        server.set_debuglevel(debag)
-        break
+        try:
+            server.login(account, password)
+            server.set_debuglevel(debag)
+        except:
+            print('')
+            print(' エラー:認証に失敗しました')
+            print('')
+            print(' ユーザーアカウントを確認してください')
+            print('')
+            print(' アカウントの権限を確認してください')
+            print('')
+            print(' 手動でログインしてください')
+            print('')
+            input(' リトライするにはエンターキーを押してください')
+            g=0
+            continue
+        else:
+            break
     print('')
     host2=input(' smtpサーバのホスト名 >> ')
     port=input(' smtpサーバのポート番号 >> ')
@@ -124,6 +140,8 @@ while cdf==1:
     except:
         print('')
         print(' エラー:認証に失敗しました')
+        print('')
+        print(' ユーザーアカウントを確認してください')
         print('')
         print(' アカウントの権限を確認してください')
         print('')
@@ -140,11 +158,14 @@ while cdf==1:
             config = configparser.ConfigParser()
             config.read('.\\host.ini')
             section2 = 'profile'
-            config.add_section(section2)
+            try:
+                config.add_section(section2)
+            except configparser.DuplicateSectionError:
+                pass
             config.set(section2, 'file', filename)
             try:
                 cc=config.get(section2, 'hostc')
-                cc=cc+1
+                cc=int(cc)+1
             except configparser.NoOptionError:
                 cc=1
             config.set(section2, 'hostc', str(cc))

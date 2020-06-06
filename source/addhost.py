@@ -3,7 +3,39 @@ import getpass
 import configparser
 import pickle
 import smtplib, ssl
+import os
+import sys
+import copy
 print('')
+print(' 確認ではなく新規作成するには「-a」と入力してください')
+files=input(' 確認するセッションファイル名 >> ')
+def edit(files):
+    print('')
+    print(' セッションファイルの確認')
+    print('')
+    files=files+".bin"
+    g=os.path.isfile(files)
+    if g==1:
+        f=open(files,'rb')
+        usear=pickle.load(f)
+        cg=copy.copy(usear[2])
+        if cg=="n" or cg=="N":
+            ccf="なし"
+        else:
+            ccf="あり"
+        account=" メールアカウント: "+copy.copy(usear[0])
+        pas=" セッションパスワード: "+ccf
+        host2=" ホスト名: "+copy.copy(usear[3])
+        port=" ポート番号: "+copy.copy(usear[4])
+        usear=[host2,port,account,pas]
+        print(' 一部の重要な情報は非表示になっています...')
+        print('')
+        [print(i) for i in usear]
+        print('')
+        input(' <'+files+'> ')
+if files!="-a":
+   edit(files)
+   sys.exit()
 def hostadd():
     cdf=1
     host2=input(' smtpサーバのホスト名 >> ')
