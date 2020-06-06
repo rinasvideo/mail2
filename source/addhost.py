@@ -14,6 +14,7 @@ def hostadd():
         print('')
         password = getpass.getpass()
         try:
+            print('認証中...')
             server = smtplib.SMTP_SSL(host2, int(port), context=ssl.create_default_context())
             server.login(account, password)
             server.set_debuglevel(debag)
