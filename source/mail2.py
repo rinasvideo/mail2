@@ -239,7 +239,7 @@ print('')
 # メールの送信
 try:
     server.send_message(msg)
-except smtplib.SMTPRecipientsRefused:
+except:
     print(' エラー:送信に失敗しました。\n 送信先のメールアドレスを確認してください')
     print('')
     input(' 終了するにはエンターキーを押してください')
