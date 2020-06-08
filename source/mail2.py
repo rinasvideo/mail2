@@ -21,7 +21,8 @@ def hostadd():
     account = input(' ユーザー名 >> ')
     from_email=account
     print('')
-    password = getpass.getpass()
+    password2 = getpass.getpass()
+    password = hashlib.sha256(password2.encode()).hexdigest()
     k=input(' セッション情報を記憶しますか？　(Y or N) >> ')
     if k=="Y" or k=="y":
         filename=input(' セッションファイル名 >> ')
@@ -94,8 +95,20 @@ while cdf==1:
                 print(' セッションファイルのパスワードが一致しません')
                 input(' リトライするにはエンターキーを押してください')
                 continue
-        account=copy.copy(usear[0])
         password=copy.copy(usear[1])
+        password=hashlib.sha256(password.encode()).hexdigest()
+        pass1=getpass.getpass(' アカウントのパスワード >> ')
+        pass2=hashlib.sha256(pass1.encode()).hexdigest()
+        if pass2!=password:
+             print('')
+             print(pass2+"\n "+password)
+             print(' アカウントのパスワードが一致しません')
+             input(' リトライするにはエンターキーを押してください')
+             continue
+        else:
+             password=copy.copy(pass1)
+        account=copy.copy(usear[0])
+        
         host2=copy.copy(usear[3])
         port=copy.copy(usear[4])
         from_email=account
@@ -128,7 +141,12 @@ while cdf==1:
             break
     print('')
     host2=input(' smtpサーバのホスト名 >> ')
+    print('')
+    print(' ポート番号はサーバー側から特に指定のない場合、\n SSL用ポート番号の「465」を入力してください')
+    print('')
     port=input(' smtpサーバのポート番号 >> ')
+    if port=="":
+       port="465"
     account = input(' ユーザー名 >> ')
     from_email=account
     print('')
