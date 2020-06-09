@@ -10,6 +10,7 @@ import copy
 import configparser
 import getpass
 import hashlib
+import glob
 
 cc=0
 g=0
@@ -65,12 +66,29 @@ if filecheck!=0:
         g=0
 else:
     ccvg=0
+os.chdir("./")
 os.system('cls')
 cc=int(cc)
 if cc>1:
     print('')
+    print(' 「-a」でファイル一覧より選択可能です')
+    print('')
     file=input(' ロードするセッションファイル名 >> ')
-    file=file+'.bin'
+    if file=="-a":
+        print('')
+        print(' ファイルインデックスを入力してください \n インデックスは必ず0から始まります')
+        print('')
+        files=glob.glob(".\\*.bin")
+        [print(i+"\n ") for i in files]
+        print('')
+        coun=len(files)-1
+        print(' 最大インデックスは'+str(coun)+"です")
+        print('')
+        ac=input(' ファイルインデックス  0～ >> ')
+        ac=int(ac)
+        file=copy.copy(files[ac])
+    else:
+        file=file+'.bin'
     g=os.path.isfile(file)
 # 表示位置調整
 print('')
