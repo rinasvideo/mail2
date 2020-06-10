@@ -19,22 +19,28 @@ args = sys.argv
 def hostadd():
     host2=input(' smtpサーバのホスト名 >> ')
     port=input(' smtpサーバのポート番号 >> ')
-    account = input(' ユーザー名 >> ')
+    account = "none"
     from_email=account
     print('')
-    password2 = getpass.getpass()
-    password = hashlib.sha256(password2.encode()).hexdigest()
+    password = 'none'
     k=input(' セッション情報を記憶しますか？　(Y or N) >> ')
     if k=="Y" or k=="y":
         filename=input(' セッションファイル名 >> ')
         filename=filename+".bin"
         config = configparser.ConfigParser()
         section2 = 'profile'
-        config.add_section(section2)
+        section2 = 'profile'
+        try:
+            config.add_section(section2)
+        except configparser.DuplicateSectionError:
+            pass
         config.set(section2, 'file', filename)
-        cc=config.get(section2, 'hostc')
-        cc=cc+1
-        config.set(section2, 'hostc', cc)
+        try:
+            cc=config.get(section2, 'hostc')
+            cc=2
+        except configparser.NoOptionError:
+            cc=2
+        config.set(section2, 'hostc', str(cc))
         with open('.\\host.ini', 'w') as file:
             config.write(file)
         print(' ')
@@ -71,24 +77,31 @@ os.system('cls')
 cc=int(cc)
 if cc>1:
     print('')
-    print(' 「-a」でファイル一覧より選択可能です')
-    print('')
-    file=input(' ロードするセッションファイル名 >> ')
-    if file=="-a":
+    ccd=1
+    while ccd==1:
+        print(' 「-a」でファイル一覧より選択可能です')
         print('')
-        print(' ファイルインデックスを入力してください \n インデックスは必ず0から始まります')
-        print('')
-        files=glob.glob(".\\*.bin")
-        [print(i+"\n ") for i in files]
-        print('')
-        coun=len(files)-1
-        print(' 最大インデックスは'+str(coun)+"です")
-        print('')
-        ac=input(' ファイルインデックス  0～ >> ')
-        ac=int(ac)
-        file=copy.copy(files[ac])
-    else:
-        file=file+'.bin'
+        file=input(' ロードするセッションファイル名 >> ')
+        if file=="":
+            hostadd()
+        if file=="-a":
+            print('')
+            print(' ファイルインデックスを入力してください \n インデックスは必ず0から始まります')
+            print('')
+            files=glob.glob(".\\*.bin")
+            [print(i+"\n ") for i in files]
+            print('')
+            coun=len(files)-1
+            print(' 最大インデックスは'+str(coun)+"です")
+            print('')
+            ac=input(' ファイルインデックス  0～ >> ')
+            ac=int(ac)
+            if coun<ac:
+                ac=copy.copy(coun)
+            file=copy.copy(files[ac])
+        else:
+            file=file+'.bin'
+        break
     g=os.path.isfile(file)
 # 表示位置調整
 print('')
@@ -113,50 +126,39 @@ while cdf==1:
                 print(' セッションファイルのパスワードが一致しません')
                 input(' リトライするにはエンターキーを押してください')
                 continue
-        password=copy.copy(usear[1])
-        password=hashlib.sha256(password.encode()).hexdigest()
-        pass1=getpass.getpass(' アカウントのパスワード >> ')
-        pass2=hashlib.sha256(pass1.encode()).hexdigest()
-        if pass2!=password:
-             print('')
-             print(pass2+"\n "+password)
-             print(' アカウントのパスワードが一致しません')
-             input(' リトライするにはエンターキーを押してください')
-             continue
-        else:
-             password=copy.copy(pass1)
-        account=copy.copy(usear[0])
-        
-        host2=copy.copy(usear[3])
-        port=copy.copy(usear[4])
-        from_email=account
-        try:
-            server = smtplib.SMTP_SSL(host2, int(port), context=ssl.create_default_context())
-        except:
-            print(' 接続に失敗しました...')
-            print('')
-            print(' エラー：セッションファイル名 '+file)
-            print('')
-            input(' エンターキーを押すとソフトウェアを終了します')
-            sys.exit()
-        try:
-            server.login(account, password)
-            server.set_debuglevel(debag)
-        except:
-            print('')
-            print(' エラー:認証に失敗しました')
-            print('')
-            print(' ユーザーアカウントを確認してください')
-            print('')
-            print(' アカウントの権限を確認してください')
-            print('')
-            print(' 手動でログインしてください')
-            print('')
-            input(' リトライするにはエンターキーを押してください')
-            g=0
-            continue
-        else:
-            break
+    account=input(' ユーザー名 >> ')
+    print('')
+    password=getpass.getpass(' アカウントパスワード>> ')
+    host2=copy.copy(usear[3])
+    port=copy.copy(usear[4])
+    from_email=account
+    try:
+        server = smtplib.SMTP_SSL(host2, int(port), context=ssl.create_default_context())
+    except:
+        print(' 接続に失敗しました...')
+        print('')
+        print(' エラー：セッションファイル名 '+file)
+        print('')
+        input(' エンターキーを押すとソフトウェアを終了します')
+        sys.exit()
+    try:
+        server.login(account, password)
+        server.set_debuglevel(debag)
+    except:
+        print('')
+        print(' エラー:認証に失敗しました')
+        print('')
+        print(' ユーザーアカウントを確認してください')
+        print('')
+        print(' アカウントの権限を確認してください')
+        print('')
+        print(' 手動でログインしてください')
+        print('')
+        input(' リトライするにはエンターキーを押してください')
+        g=0
+        continue
+    else:
+        break
     print('')
     host2=input(' smtpサーバのホスト名 >> ')
     print('')
@@ -165,10 +167,6 @@ while cdf==1:
     port=input(' smtpサーバのポート番号 >> ')
     if port=="":
        port="465"
-    account = input(' ユーザー名 >> ')
-    from_email=account
-    print('')
-    password = getpass.getpass()
     try:
         server = smtplib.SMTP_SSL(host2, int(port), context=ssl.create_default_context())
         server.login(account, password)
