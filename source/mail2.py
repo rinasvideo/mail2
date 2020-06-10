@@ -51,6 +51,7 @@ def hostadd():
         f=open(filename,'wb')
         pickle.dump(usear,f)
         f.close()
+        return host2, port
 
 cds=0
 j=len(args)
@@ -78,12 +79,14 @@ cc=int(cc)
 if cc>1:
     print('')
     ccd=1
+    ccff=1
     while ccd==1:
         print(' 「-a」でファイル一覧より選択可能です')
         print('')
         file=input(' ロードするセッションファイル名 >> ')
         if file=="":
-            hostadd()
+            host2,port=hostadd()
+            ccff=0
         if file=="-a":
             print('')
             print(' ファイルインデックスを入力してください \n インデックスは必ず0から始まります')
@@ -126,11 +129,15 @@ while cdf==1:
                 print(' セッションファイルのパスワードが一致しません')
                 input(' リトライするにはエンターキーを押してください')
                 continue
+    print('')
+    print(' ログイン')
+    print('')
     account=input(' ユーザー名 >> ')
     print('')
     password=getpass.getpass(' アカウントパスワード>> ')
-    host2=copy.copy(usear[3])
-    port=copy.copy(usear[4])
+    if ccff==1:
+        host2=copy.copy(usear[3])
+        port=copy.copy(usear[4])
     from_email=account
     try:
         server = smtplib.SMTP_SSL(host2, int(port), context=ssl.create_default_context())
