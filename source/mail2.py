@@ -11,47 +11,51 @@ import configparser
 import getpass
 import hashlib
 import glob
-
+ccff=0
 cc=0
 g=0
 args = sys.argv
 #os.chdir(os.path.dirname(args[0]))
 def hostadd():
     host2=input(' smtpサーバのホスト名 >> ')
+    print('')
+    print(' ポート番号はサーバー側から特に指定のない場合、\n SSL用ポート番号の「465」を入力してください')
+    print('')
     port=input(' smtpサーバのポート番号 >> ')
+    if port=="":
+       port="465"
     account = "none"
     from_email=account
     print('')
     password = 'none'
-    k=input(' セッション情報を記憶しますか？　(Y or N) >> ')
-    if k=="Y" or k=="y":
-        filename=input(' セッションファイル名 >> ')
-        filename=filename+".bin"
-        config = configparser.ConfigParser()
-        section2 = 'profile'
-        section2 = 'profile'
-        try:
-            config.add_section(section2)
-        except configparser.DuplicateSectionError:
-            pass
-        config.set(section2, 'file', filename)
-        try:
-            cc=config.get(section2, 'hostc')
-            cc=2
-        except configparser.NoOptionError:
-            cc=2
-        config.set(section2, 'hostc', str(cc))
-        with open('.\\host.ini', 'w') as file:
-            config.write(file)
-        print(' ')
-        print(' 記憶したセッション情報をクリアするには\n アプリケーションディレクトリ内の「profile.bin」を削除してください')
-        print('')
-        cgn=input(' 次回からユーザー情報の入力を省略します (Enter) >>')
-        usear=[account,password,cgn,host2,port]
-        f=open(filename,'wb')
-        pickle.dump(usear,f)
-        f.close()
-        return host2, port
+    filename=input(' セッションファイル名 >> ')
+    filename=filename+".bin"
+    config = configparser.ConfigParser()
+    section2 = 'profile'
+    section2 = 'profile'
+    try:
+        config.add_section(section2)
+    except configparser.DuplicateSectionError:
+        pass
+    config.set(section2, 'file', filename)
+    try:
+        cc=config.get(section2, 'hostc')
+        cc=2
+    except configparser.NoOptionError:
+        cc=2
+    config.set(section2, 'hostc', str(cc))
+    with open('.\\host.ini', 'w') as file:
+        config.write(file)
+    print(' ')
+    print(' 記憶したセッション情報をクリアするには\n アプリケーションディレクトリ内の「profile.bin」を削除してください')
+    print('')
+    cgn=input(' 次回からユーザー情報の入力を省略します (Enter) >>')
+    usear=[account,password,cgn,host2,port]
+    f=open(filename,'wb')
+    pickle.dump(usear,f)
+    f.close()
+    os.system('cls')
+    return host2, port
 
 cds=0
 j=len(args)
@@ -60,6 +64,9 @@ if j==2:
         message = f.read()
         cds=1
 filecheck=os.path.exists('./host.ini')
+if filecheck==0:
+    host2,port=hostadd()
+    ccff=0
 if filecheck!=0:
     ccvg=1
     try:
@@ -80,11 +87,12 @@ if cc>1:
     print('')
     ccd=1
     ccff=1
+    ffm=os.path.isfile('.\host.ini')
     while ccd==1:
         print(' 「-a」でファイル一覧より選択可能です')
         print('')
         file=input(' ロードするセッションファイル名 >> ')
-        if file=="":
+        if file=="" or ffm==0:
             host2,port=hostadd()
             ccff=0
         if file=="-a":
@@ -108,7 +116,7 @@ if cc>1:
     g=os.path.isfile(file)
 # 表示位置調整
 print('')
-
+os.system('cls')
 # デバッグ情報の表示
 debag=0
 
@@ -166,67 +174,6 @@ while cdf==1:
         continue
     else:
         break
-    print('')
-    host2=input(' smtpサーバのホスト名 >> ')
-    print('')
-    print(' ポート番号はサーバー側から特に指定のない場合、\n SSL用ポート番号の「465」を入力してください')
-    print('')
-    port=input(' smtpサーバのポート番号 >> ')
-    if port=="":
-       port="465"
-    try:
-        server = smtplib.SMTP_SSL(host2, int(port), context=ssl.create_default_context())
-        server.login(account, password)
-        server.set_debuglevel(debag)
-    except:
-        print('')
-        print(' エラー:認証に失敗しました')
-        print('')
-        print(' ユーザーアカウントを確認してください')
-        print('')
-        print(' アカウントの権限を確認してください')
-        print('')
-        input(' リトライするにはエンターキーを押してください')
-        if g==1:
-            g=0
-        continue
-    else:
-        cdf=0
-        k=input(' セッション情報を記憶しますか？　(Y or N) >> ')
-        if k=="Y" or k=="y":
-            filename=input(' セッションファイル名 >> ')
-            filename=filename+".bin"
-            config = configparser.ConfigParser()
-            config.read('.\\host.ini')
-            section2 = 'profile'
-            try:
-                config.add_section(section2)
-            except configparser.DuplicateSectionError:
-                pass
-            config.set(section2, 'file', filename)
-            try:
-                cc=config.get(section2, 'hostc')
-                cc=int(cc)+1
-            except configparser.NoOptionError:
-                cc=1
-            config.set(section2, 'hostc', str(cc))
-            with open('.\\host.ini', 'w') as file:
-                config.write(file)
-            print(' ')
-            print(' 記憶したセッション情報をクリアするには\n アプリケーションディレクトリ内の「profile.bin」を削除してください')
-            print('')
-            input(' 次回からユーザー情報の入力を省略します (Enter) >>')
-            pas=input(' パスワードロックをかけますか? (推奨)  (y or n) >> ')
-            if pas=="y":
-               pas2= getpass.getpass()
-               hs = hashlib.sha256(pas2.encode()).hexdigest()
-            else:
-               hs=""
-               pas="n"
-            usear=[account,password,pas,host2,port,hs]
-            f=open(filename,'wb')
-            pickle.dump(usear,f)
-            f.close()
 
 os.system('cls')
 print('')
