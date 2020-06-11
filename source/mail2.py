@@ -90,7 +90,7 @@ if cc>1:
     ccd=1
     ccff=1
     ffm=os.path.isfile('.\host.ini')
-    #セッションファイルの読み込み画面
+    #セッションファイルのロード画面
     while ccd==1:
         print(' 「-a」でファイル一覧より選択可能です')
         print('')
@@ -124,7 +124,7 @@ os.system('cls')
 # デバッグ情報の表示
 debag=0
 
-# SMTPサーバへのログイン
+# SMTPサーバへの接続
 cdf=1
 while cdf==1:
     if g==True and ccvg==1:
@@ -136,11 +136,13 @@ while cdf==1:
             password2 = getpass.getpass(" セッションファイルのパスワード >> ")
             hs = hashlib.sha256(password2.encode()).hexdigest()
             pasw=copy.copy(usear[5])
+            os.system('cls')
             if hs!=pasw:
                 print('')
                 print(' セッションファイルのパスワードが一致しません')
                 input(' リトライするにはエンターキーを押してください')
                 continue
+    # ログイン画面
     print('')
     print(' ログイン')
     print('')
