@@ -91,7 +91,8 @@ if cc>1:
         print(' 「-a」でファイル一覧より選択可能です')
         print('')
         file=input(' ロードするセッションファイル名 >> ')
-        if file=="" or ffm==0:
+        ffm2=os.path.isfile(file)
+        if file=="" or ffm==0 or ffm2==0:
             host2,port=hostadd()
             ccff=0
         if file=="-a":
@@ -136,9 +137,7 @@ while cdf==1:
                 print(' セッションファイルのパスワードが一致しません')
                 input(' リトライするにはエンターキーを押してください')
                 continue
-    else:
-        host2,port=hostadd()
-        ccff=0
+
     print('')
     print(' ログイン')
     print('')
