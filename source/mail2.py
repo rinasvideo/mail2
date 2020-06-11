@@ -98,7 +98,7 @@ while ccd==1:
     file=input(' ロードするセッションファイル名 >> ')
     file2=file+'.bin'
     ffm2=os.path.isfile(file2)
-    if file=="" or ffm==0 or ffm2==0:
+    if file=="" or ffm==0 or ffm2==0 and file!="-a":
         host2,port=hostadd()
         ccff=0
     if file=="-a":
@@ -148,6 +148,7 @@ def login(host2,port,server):
             print('')
             input(' リトライするにはエンターキーを押してください')
             g=0
+            os.system('cls')
             continue
         else:
             break
