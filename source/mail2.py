@@ -15,7 +15,6 @@ ccff=0
 cc=0
 g=0
 args = sys.argv
-#os.chdir(os.path.dirname(args[0]))
 def hostadd():
     host2=input(' smtpサーバのホスト名 >> ')
     print('')
@@ -169,8 +168,6 @@ while cdf==1:
         print(' ユーザーアカウントを確認してください')
         print('')
         print(' アカウントの権限を確認してください')
-        print('')
-        print(' 手動でログインしてください')
         print('')
         input(' リトライするにはエンターキーを押してください')
         g=0
