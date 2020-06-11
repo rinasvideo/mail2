@@ -137,7 +137,6 @@ while cdf==1:
                 print(' セッションファイルのパスワードが一致しません')
                 input(' リトライするにはエンターキーを押してください')
                 continue
-
     print('')
     print(' ログイン')
     print('')
