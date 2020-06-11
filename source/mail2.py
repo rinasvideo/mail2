@@ -85,45 +85,73 @@ else:
 os.chdir("./")
 os.system('cls')
 cc=int(cc)
-if cc>1:
+
+print('')
+ccd=1
+ccff=1
+ffm=os.path.isfile('.\host.ini')
+#セッションファイルのロード画面
+while ccd==1:
+    os.chdir("./")
+    print(' 「-a」でファイル一覧より選択可能です')
     print('')
-    ccd=1
-    ccff=1
-    ffm=os.path.isfile('.\host.ini')
-    #セッションファイルのロード画面
-    while ccd==1:
-        print(' 「-a」でファイル一覧より選択可能です')
+    file=input(' ロードするセッションファイル名 >> ')
+    file2=file+'.bin'
+    ffm2=os.path.isfile(file2)
+    if file=="" or ffm==0 or ffm2==0:
+        host2,port=hostadd()
+        ccff=0
+    if file=="-a":
         print('')
-        file=input(' ロードするセッションファイル名 >> ')
-        ffm2=os.path.isfile(file)
-        if file=="" or ffm==0 or ffm2==0:
-            host2,port=hostadd()
-            ccff=0
-        if file=="-a":
-            print('')
-            print(' ファイルインデックスを入力してください \n インデックスは必ず0から始まります')
-            print('')
-            files=glob.glob(".\\*.bin")
-            [print(i+"\n ") for i in files]
-            print('')
-            coun=len(files)-1
-            print(' 最大インデックスは'+str(coun)+"です")
-            print('')
-            ac=input(' ファイルインデックス  0～ >> ')
-            ac=int(ac)
-            if coun<ac:
-                ac=copy.copy(coun)
-            file=copy.copy(files[ac])
-        else:
-            file=file+'.bin'
-        break
-    g=os.path.isfile(file)
+        print(' ファイルインデックスを入力してください \n インデックスは必ず0から始まります')
+        print('')
+        files=glob.glob(".\\*.bin")
+        [print(i+"\n ") for i in files]
+        print('')
+        coun=len(files)-1
+        print(' 最大インデックスは'+str(coun)+"です")
+        print('')
+        ac=input(' ファイルインデックス  0～ >> ')
+        ac=int(ac)
+        if coun<ac:
+            ac=copy.copy(coun)
+        file=copy.copy(files[ac])
+    else:
+        file=file+'.bin'
+    break
+g=os.path.isfile(file)
 # 表示位置調整
 print('')
 os.system('cls')
 # デバッグ情報の表示
 debag=0
-
+def login(host2,port,server):
+    while cdf==1:
+        # ログイン画面
+        print('')
+        print(' ログイン')
+        print('')
+        account=input(' ユーザー名 >> ')
+        print('')
+        password=getpass.getpass(' アカウントパスワード>> ')
+        from_email=account
+        try:
+            server.login(account, password)
+            server.set_debuglevel(debag)
+        except:
+            print('')
+            print(' エラー:認証に失敗しました')
+            print('')
+            print(' ユーザーアカウントを確認してください')
+            print('')
+            print(' アカウントの権限を確認してください')
+            print('')
+            input(' リトライするにはエンターキーを押してください')
+            g=0
+            continue
+        else:
+            break
+    return from_email,server
 # SMTPサーバへの接続
 cdf=1
 while cdf==1:
@@ -142,17 +170,9 @@ while cdf==1:
                 print(' セッションファイルのパスワードが一致しません')
                 input(' リトライするにはエンターキーを押してください')
                 continue
-    # ログイン画面
-    print('')
-    print(' ログイン')
-    print('')
-    account=input(' ユーザー名 >> ')
-    print('')
-    password=getpass.getpass(' アカウントパスワード>> ')
     if ccff==1:
         host2=copy.copy(usear[3])
         port=copy.copy(usear[4])
-    from_email=account
     try:
         server = smtplib.SMTP_SSL(host2, int(port), context=ssl.create_default_context())
     except:
@@ -160,23 +180,18 @@ while cdf==1:
         print('')
         print(' エラー：セッションファイル名 '+file)
         print('')
-        input(' エンターキーを押すとソフトウェアを終了します')
-        sys.exit()
-    try:
-        server.login(account, password)
-        server.set_debuglevel(debag)
-    except:
+        print('　セッション情報を設定しなおさない場合ソフトウェアを終了します')
         print('')
-        print(' エラー:認証に失敗しました')
-        print('')
-        print(' ユーザーアカウントを確認してください')
-        print('')
-        print(' アカウントの権限を確認してください')
-        print('')
-        input(' リトライするにはエンターキーを押してください')
-        g=0
-        continue
+        kg=input(' セッション情報を設定しなおしますか? (y or n) >>')
+        if kg=="y" or kg=="Y":
+            host2,port=hostadd()
+            g=0
+            continue
+        else:
+            sys.exit()
     else:
+        print('')
+        from_email,server=login(host2,port,server)        
         break
 
 os.system('cls')
