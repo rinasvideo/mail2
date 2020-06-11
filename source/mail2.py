@@ -137,6 +137,9 @@ while cdf==1:
                 print(' セッションファイルのパスワードが一致しません')
                 input(' リトライするにはエンターキーを押してください')
                 continue
+    else:
+        host2,port=hostadd()
+        ccff=0
     print('')
     print(' ログイン')
     print('')
