@@ -11,6 +11,7 @@ import configparser
 import getpass
 import hashlib
 import glob
+import datetime
 ccff=0
 cc=0
 g=0
@@ -250,5 +251,16 @@ except:
     sys.exit()
 else:
     server.quit()
+    to="to:"+to_email
+    from2="from:"+from_email
+    sub="件名:"+subject
+    dt_now = datetime.datetime.now()
+    data=dt_now.strftime('%Y/%m/%d/ %H:%M:%S')
+    msg="本文:"+message1
+    backups="件名:"+subject+"\n送信先: "+to_email+"\n送信元:"+from_email+"\n日付："+data+"\n\n本文:"+message1
+    usear=[to,from2,sub,data,msg]
+    with open("./mail.log", mode='w') as f:
+        f.write(backups)
+    f.close()
     input(' 送信しました>>')
 sys.exit()
