@@ -2,5 +2,7 @@
 
 main language Japanese 
 
+software Necessary information 
+
 mail server(smtp) + mail account
 
