@@ -15,6 +15,8 @@ ccff=0
 cc=0
 g=0
 args = sys.argv
+
+#ホスト情報の追加関数
 def hostadd():
     host2=input(' smtpサーバのホスト名 >> ')
     print('')
@@ -66,6 +68,7 @@ filecheck=os.path.exists('./host.ini')
 if filecheck==0:
     host2,port=hostadd()
     ccff=0
+#configの読み取り
 if filecheck!=0:
     ccvg=1
     try:
@@ -87,6 +90,7 @@ if cc>1:
     ccd=1
     ccff=1
     ffm=os.path.isfile('.\host.ini')
+    #セッションファイルの読み込み画面
     while ccd==1:
         print(' 「-a」でファイル一覧より選択可能です')
         print('')
