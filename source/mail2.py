@@ -18,6 +18,7 @@ args = sys.argv
 
 #ホスト情報の追加関数
 def hostadd():
+    print('')
     host2=input(' smtpサーバのホスト名 >> ')
     print('')
     print(' ポート番号はサーバー側から特に指定のない場合、\n SSL用ポート番号の「465」を入力してください')
@@ -92,7 +93,9 @@ ccff=1
 ffm=os.path.isfile('.\host.ini')
 #セッションファイルのロード画面
 while ccd==1:
+    os.system('cls')
     os.chdir("./")
+    print('')
     print(' 「-a」でファイル一覧より選択可能です')
     print('')
     file=input(' ロードするセッションファイル名 >> ')
@@ -102,6 +105,7 @@ while ccd==1:
         host2,port=hostadd()
         ccff=0
     if file=="-a":
+        os.system('cls')
         print('')
         print(' ファイルインデックスを入力してください \n インデックスは必ず0から始まります')
         print('')
@@ -111,10 +115,19 @@ while ccd==1:
         coun=len(files)-1
         print(' 最大インデックスは'+str(coun)+"です")
         print('')
+        print(' -1:ホスト情報の追加')
+        print('')
         ac=input(' ファイルインデックス  0～ >> ')
         ac=int(ac)
+        if ac==-1:
+            os.system('cls')
+            host2,port=hostadd()
+            continue
+        if ac<-1:
+            ac=0
         if coun<ac:
             ac=copy.copy(coun)
+        
         file=copy.copy(files[ac])
     else:
         file=file+'.bin'
