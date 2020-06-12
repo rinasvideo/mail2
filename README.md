@@ -1,6 +1,6 @@
 # mail2
 
-![](./5B2E17F1-268D-4D2A-BAF1-01484DE7E543.png)
+![](./5B2E17F1-268D-4D2A-BAF1-01484DE7E543.png =50×50)
 
 ***Dedicated to sending mail tool***
 
