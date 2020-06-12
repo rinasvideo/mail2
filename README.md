@@ -7,10 +7,8 @@ software main language Japanese
 mail server(smtp) + mail account
 
 **Group membership** 
-
-rinasvideo 
-
-[home page](https://rinasvideo.web.fc2.com/)
+ 
+[rinasvideo](https://rinasvideo.web.fc2.com/)
 
 [app download(windows)](mail2.exe)
 
