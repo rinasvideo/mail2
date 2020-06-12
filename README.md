@@ -10,5 +10,5 @@ mail server(smtp) + mail account
 
 rinasvideo 
 
-[home page](url)
+[home page](https://rinasvideo.web.fc2.com/)
 
