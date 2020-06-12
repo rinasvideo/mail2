@@ -8,5 +8,7 @@ mail server(smtp) + mail account
 
 **Group membership** 
 
-rinasvideo
+rinasvideo 
+
+[home page](url)
 
