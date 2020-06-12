@@ -1,6 +1,6 @@
 # mail2
 
-***Dedicated to sending mail***
+***Dedicated to sending mail tool***
 
 software main language Japanese 
 
