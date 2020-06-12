@@ -59,7 +59,7 @@ def hostadd():
     f.close()
     os.system('cls')
     return host2, port
-
+ccff=1
 cds=0
 j=len(args)
 if j==2:
@@ -90,7 +90,7 @@ cc=int(cc)
 
 print('')
 ccd=1
-ccff=1
+
 ffm=os.path.isfile('.\host.ini')
 #セッションファイルのロード画面
 while ccd==1:
@@ -120,16 +120,14 @@ while ccd==1:
         if ac==-2:
             os.system('cls')
             host2,port=hostadd()
+            ccf=0
             continue
         if ac<-1:
             ac=0
         if coun<ac:
-            ac=copy.copy(coun)       
-        file=copy.copy(files[ac])
-    else:
-        file=file+'.bin'
-    break
-g=os.path.isfile(file)
+            ac=copy.copy(coun)
+        break
+
 # 表示位置調整
 print('')
 os.system('cls')
@@ -166,21 +164,12 @@ def login(host2,port,server):
 # SMTPサーバへの接続
 cdf=1
 while cdf==1:
+    file=copy.copy(files[ac])
+    g=os.path.isfile(file)
     if g==True and ccvg==1:
         # SMTP認証情報の読み込み
         f=open(file,'rb')
         usear=pickle.load(f)
-        pas=copy.copy(usear[2])
-        if pas=="y" or pas=="Y":
-            password2 = getpass.getpass(" セッションファイルのパスワード >> ")
-            hs = hashlib.sha256(password2.encode()).hexdigest()
-            pasw=copy.copy(usear[5])
-            os.system('cls')
-            if hs!=pasw:
-                print('')
-                print(' セッションファイルのパスワードが一致しません')
-                input(' リトライするにはエンターキーを押してください')
-                continue
     if ccff==1:
         host2=copy.copy(usear[3])
         port=copy.copy(usear[4])
