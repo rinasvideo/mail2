@@ -14,4 +14,4 @@ rinasvideo
 
 [app download(windows)](mail2.exe)
 
-Author: zero
+Producer: zero
