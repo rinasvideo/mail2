@@ -1,5 +1,7 @@
 # mail2
 
+![](./pic/pic1_50.png =100x20)
+
 ***Dedicated to sending mail tool***
 
 software main language Japanese 
