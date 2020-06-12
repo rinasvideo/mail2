@@ -19,6 +19,6 @@ software license is MIT license
 
 ## download
 
-[app download(windows)](mail2.exe)
+[app download(windows)](./release/mail2.exe)
 
 Producer: zero
