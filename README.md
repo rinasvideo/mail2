@@ -1,6 +1,6 @@
 # mail2
 
-main language Japanese 
+software main language Japanese 
 
 **software Necessary information** 
 
