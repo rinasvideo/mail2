@@ -12,3 +12,4 @@ rinasvideo
 
 [home page](https://rinasvideo.web.fc2.com/)
 
+Author: zero
