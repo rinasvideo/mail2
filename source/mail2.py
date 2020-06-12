@@ -97,38 +97,34 @@ while ccd==1:
     os.system('cls')
     os.chdir("./")
     print('')
-    print(' 「-a」でファイル一覧より選択可能です')
-    print('')
-    file=input(' ロードするセッションファイル名 >> ')
-    file2=file+'.bin'
-    ffm2=os.path.isfile(file2)
-    if file=="" or ffm==0 or ffm2==0 and file!="-a":
-        host2,port=hostadd()
-        ccff=0
+    file="-a"
     if file=="-a":
+        co=-1
         os.system('cls')
         print('')
         print(' ファイルインデックスを入力してください \n インデックスは必ず0から始まります')
         print('')
-        files=glob.glob(".\\*.bin")
-        [print(i+"\n ") for i in files]
+        files=glob.glob(".\\*.bin")        
+        for x in files:
+            co=co+1
+            print(' '+str(co)+":"+x)
+            print('')
         print('')
         coun=len(files)-1
         print(' 最大インデックスは'+str(coun)+"です")
         print('')
-        print(' -1:ホスト情報の追加')
+        print(' -2:ホスト情報の追加')
         print('')
         ac=input(' ファイルインデックス  0～ >> ')
         ac=int(ac)
-        if ac==-1:
+        if ac==-2:
             os.system('cls')
             host2,port=hostadd()
             continue
         if ac<-1:
             ac=0
         if coun<ac:
-            ac=copy.copy(coun)
-        
+            ac=copy.copy(coun)       
         file=copy.copy(files[ac])
     else:
         file=file+'.bin'
