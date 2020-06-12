@@ -1,6 +1,6 @@
 # mail2
 
-![](./pic/pic1_50.png =100x20)
+![](AEC68DE9-3B8B-4EE6-B297-B6E3AC28BFEB.ico =100x20)
 
 ***Dedicated to sending mail tool***
 
