@@ -12,7 +12,7 @@ mail server(smtp) + mail account
  
 [rinasvideo](https://rinasvideo.web.fc2.com/)
 
-##download h2
+## download h2
 
 [app download(windows)](mail2.exe)
 
