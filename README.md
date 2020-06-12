@@ -12,7 +12,7 @@ mail server(smtp) + mail account
 
 software license is MIT license
 
-# group membership links
+## group membership links
  
 [rinasvideo](https://rinasvideo.web.fc2.com/)
 
