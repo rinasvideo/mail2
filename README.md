@@ -8,6 +8,10 @@ software Necessary information!
 
 mail server(smtp) + mail account
 
+## software license
+
+software license is MIT license
+
 **Group membership** 
  
 [rinasvideo](https://rinasvideo.web.fc2.com/)
