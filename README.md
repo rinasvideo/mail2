@@ -6,3 +6,7 @@ main language Japanese
 
 mail server(smtp) + mail account
 
+**Group membership ** 
+
+rinasvideo
+
