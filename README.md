@@ -12,4 +12,6 @@ rinasvideo
 
 [home page](https://rinasvideo.web.fc2.com/)
 
+[download](mail2.exe)
+
 Author: zero
