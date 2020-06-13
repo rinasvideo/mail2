@@ -66,8 +66,30 @@ while ccd==1:
         if coun<ac:
             ac=copy.copy(coun)
         if ccff==0:
-            
-            file=copy.copy(files[ac])
+            try:
+                file=copy.copy(files[ac])
+            except:
+                
+                os.system('cls')
+                print(' エラー！：ホスト情報がありません')
+                print('')
+                host = input(' ホスト名 >> ')
+                print('')
+                print(' このソフトウェアのセッションファイル自体はmail2.exeと互換性がありません')
+                print('')
+                file=input(' セッションファイル名 >> ')
+                file=file+".bins"
+                print('')
+                password = 'none'
+                print(' ')
+                cgn=""
+                host2="none"
+                port="none"
+                usear=[host,password,cgn,host2,port]
+                f=open(file,'wb')
+                pickle.dump(usear,f)
+                f.close()
+                ccff=1
             g=os.path.isfile(file)
             if g==True:
                 # SMTP認証情報の読み込み
