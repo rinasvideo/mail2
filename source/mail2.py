@@ -27,6 +27,12 @@ def hostadd():
     port=input(' smtpサーバのポート番号 >> ')
     if port=="":
        port="465"
+    kk=input(' imap情報を登録しますか? (Y or N) >> ')
+    if kk=="y" or kk=="Y":
+        print('')
+        host=input(' imapホスト名 >> ')
+    else:
+        host="none"
     account = "none"
     from_email=account
     print('')
@@ -53,7 +59,7 @@ def hostadd():
     print(' 記憶したセッション情報をクリアするには\n アプリケーションディレクトリ内の「profile.bin」を削除してください')
     print('')
     cgn=input(' 次回からユーザー情報の入力を省略します (Enter) >>')
-    usear=[account,password,cgn,host2,port]
+    usear=[host,password,cgn,host2,port]
     f=open(filename,'wb')
     pickle.dump(usear,f)
     f.close()

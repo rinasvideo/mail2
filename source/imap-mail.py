@@ -1,17 +1,62 @@
 
+import pickle
 import email
 import ssl
 import imaplib
 import getpass
 import os
+import glob
 from email.header import decode_header, make_header
+import copy
 os.system('cls')
 print('')
-print(' このツールで表示できるのはメールのほとんどが文字で構成されたhtmlメールのみです。')
-print('')
-print(' ログイン')
-print('')
-host = input(' ホスト名 >> ')
+
+
+ccd=1
+while ccd==1:
+    os.system('cls')
+    os.chdir("./")
+    print('')
+    file="-a"
+    ccff=0
+    if file=="-a":
+        co=-1
+        os.system('cls')
+        print('')
+        print(' このツールで表示できるのはメールのほとんどが文字で構成されたhtmlメールのみです。')
+        print('')
+        print(' ファイルインデックスを入力してください \n インデックスは必ず0から始まります')
+        print('')
+        files=glob.glob(".\\*.bin")        
+        for x in files:
+            co=co+1
+            print(' '+str(co)+":"+x)
+            print('')
+        print('')
+        coun=len(files)-1
+        print(' 最大インデックスは'+str(coun)+"です")
+        print('')
+        print(' -2:手動入力')
+        print('')
+        ac=input(' ファイルインデックス  0～ >> ')
+        ac=int(ac)
+        if ac==-2:
+            os.system('cls')
+            host = input(' ホスト名 >> ')
+            ccff=1
+        if coun<ac:
+            ac=copy.copy(coun)
+        if ccff==0:
+            file=copy.copy(files[ac])
+            g=os.path.isfile(file)
+            if g==True:
+                # SMTP認証情報の読み込み
+                f=open(file,'rb')
+                usear=pickle.load(f)
+                host=copy.copy(usear[0])
+        break
+
+
 nego_combo = ("ssl", 993) # ("通信方式", port番号)
 
 if nego_combo[0] == "no-encrypt":
@@ -24,6 +69,8 @@ elif nego_combo[0] == "ssl":
     context = ssl.create_default_context()
     imapclient = imaplib.IMAP4_SSL(host, nego_combo[1], ssl_context=context)
 imapclient.debug = 0  # 各命令をトレースする
+print('')        
+print(' ログイン')
 print('')
 username = input(' ユーザーネーム(メールアドレス) >> ')
 print('')
