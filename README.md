@@ -1,13 +1,16 @@
 # mail2 
 
-
-***Dedicated to sending mail tool***
-
 software main language Japanese 
 
 **software Necessary information!**
 
+mail2.exe (sending Email Dedicated tool)
+
 mail server(smtp) + mail account
+
+imap-mail.exe (Email confirmation tool)
+
+mail server(imap) + mail account
 
 ## software license
 
@@ -19,6 +22,13 @@ software license is MIT license
 
 ## download
 
-[app download(windows)](./release/mail2.exe)
+mail2.exe
+
+[mail2 download(windows)](./release/mail2.exe)
+
+imap-mail.exe
+___
+
+[imap-mail download(windows)](./release/imap-mail.exe)
 
 Producer: zero
