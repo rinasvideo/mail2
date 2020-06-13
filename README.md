@@ -26,8 +26,9 @@ mail2.exe
 
 [mail2 download(windows)](./release/mail2.exe)
 
-imap-mail.exe
 ___
+
+imap-mail.exe
 
 [imap-mail download(windows)](./release/imap-mail.exe)
 
